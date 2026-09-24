@@ -21,13 +21,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build with Gradle
-        run: gradle assembleDebug --stacktrace --no-daemon
+      - name: Set up Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.9
+
+      - name: Build with Gradle Wrapper
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
